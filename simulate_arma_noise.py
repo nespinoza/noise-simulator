@@ -1,18 +1,33 @@
 import numpy as np
 import Utils
 
-############## OPTIONS ##############
+################################# OPTIONS #################################
+
+# Number of datapoints to simulate:
+ndata = 100
+
+# Number of time-series to simulate to get the "real", "underlying" PSD:
+nsims = 1000
+
+# Noise level of added white noise to the time-series (can be 0 if you want):
 sigma = 0.0
 
+# AR part of the ARMA process (leave at 0.0 if you want a MA series):
 AR_coefficients = np.array([1.0,-0.9])
+
+# MA part of the ARMA process (leave at 0.0 if you want an AR series):
 MA_coefficients = np.array([0.0])
+
+# Standard-deviation of the white noise driving the ARMA process:
 sigma_ARMA = 0.5
-#####################################
+
+###########################################################################
+
 AR_order = len(np.where(np.abs(AR_coefficients)>0.0)[0])
 MA_order = len(np.where(np.abs(MA_coefficients)>0.0)[0])
 
 # Generate times:
-t = np.arange(100)
+t = np.arange(ndata)
 
 # Generate white noise:
 if sigma == 0.0:
@@ -60,7 +75,6 @@ plt.ylabel('PSD')
 plt.plot(f,PSD,'-',color='black')
 
 # Plot the "real" PSD on top, obtained averaging lots of realizations of the process:
-nsims = 1000
 PSD_final = np.copy(PSD)
 for i in range(nsims):
     if sigma == 0.0:
