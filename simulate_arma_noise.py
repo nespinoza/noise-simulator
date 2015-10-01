@@ -35,7 +35,7 @@ if sigma == 0.0:
 else:
         wn = np.random.normal(0,sigma,len(t))
 
-# Generate flicker noise:
+# Generate ARMA noise:
 fn = Utils.ARMAgenerator(AR_coefficients,MA_coefficients,sigma_ARMA,len(t),burnin = len(t))
 # Normalize it to have unitary variance:
 fn = fn/np.sqrt(np.var(fn))
