@@ -6,6 +6,8 @@ comes with a PSD estimation of both the time-series and the "real", "underlying"
 process which is obtained by simulating lots of simulations and averaging the obtained 
 PSDs.
 
+The ARMA and flicker noises are automatically normalized to have unitary variance.
+
 DEPENDENCIES
 ------------
 
