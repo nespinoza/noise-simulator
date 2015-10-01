@@ -1,12 +1,25 @@
 import numpy as np
 import Utils
 
-############## OPTIONS ##############
+################################# OPTIONS #################################
+
+# Number of datapoints to simulate:
+ndata = 100
+
+# Number of time-series to simulate to get the "real", "underlying" PSD:
+nsims = 1000
+
+# Noise level of added white noise to the time-series (can be 0 if you want):
 sigma = 0.0
-#####################################
+
+# Parameter of the power-law model for the PSD of the noise; 1/f^beta 
+# (beta = 1.0 gives 1/f noise):
+beta = 1.0
+
+###########################################################################
 
 # Generate times:
-t = np.arange(100)
+t = np.arange(ndata)
 
 # Generate white noise:
 if sigma == 0.0:
@@ -15,7 +28,8 @@ else:
         wn = np.random.normal(0,sigma,len(t))
 
 # Generate flicker noise:
-fn = Utils.FlickerGenerator(len(t),1.0)
+fn = Utils.FlickerGenerator(len(t),beta)
+
 # Normalize it to have unitary variance:
 fn = fn/np.sqrt(np.var(fn))
 
@@ -57,7 +71,6 @@ plt.ylabel('PSD')
 plt.plot(f,PSD,'-',color='black')
 
 # Plot the "real" PSD on top, obtained averaging lots of realizations of the process:
-nsims = 1000
 PSD_final = np.copy(PSD)
 for i in range(nsims):
         if sigma == 0.0:
